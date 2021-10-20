@@ -7,10 +7,12 @@ if(WIN32)
 	set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MDd")
 	add_compile_definitions(_CRT_SECURE_NO_WARNINGS /permissive- /Zc:__cplusplus)
 else()
-	add_compile_options(-fvisibility=hidden $<$<COMPILE_LANGUAGE:CXX>:-fvisibility-inlines-hidden>)
+	add_compile_options(-fvisibility=hidden $<$<COMPILE_LANGUAGE:CXX>:-fvisibility-inlines-hidden> -std=c++11)
 endif()
 
 add_subdirectory(ext)
+include_directories(/usr/local/opt/luajit/include/luajit-2.0)
+link_directories(/usr/local/opt/luajit/lib)
 
 set(LUA_RTMIDI_SRCS
 	src/luartmidi.cpp
@@ -21,14 +23,6 @@ set(LUA_RTMIDI_SRCS
 	src/channelout.cpp
 )
 
-add_library(lua-rtmidi51 SHARED ${LUA_RTMIDI_SRCS})
-target_compile_definitions(lua-rtmidi51 PRIVATE LUA_RTMIDI_DLL LUA_RTMIDI_DLL_EXPORTS)
-target_link_libraries(lua-rtmidi51 PRIVATE lua51 rtmidi)
-
-add_library(lua-rtmidi52 SHARED ${LUA_RTMIDI_SRCS})
-target_compile_definitions(lua-rtmidi52 PRIVATE LUA_RTMIDI_DLL LUA_RTMIDI_DLL_EXPORTS)
-target_link_libraries(lua-rtmidi52 PRIVATE lua52 rtmidi)
-
-add_library(lua-rtmidi53 SHARED ${LUA_RTMIDI_SRCS})
-target_compile_definitions(lua-rtmidi53 PRIVATE LUA_RTMIDI_DLL LUA_RTMIDI_DLL_EXPORTS)
-target_link_libraries(lua-rtmidi53 PRIVATE lua53 rtmidi)
+add_library(lua-rtmidilove SHARED ${LUA_RTMIDI_SRCS})
+target_compile_definitions(lua-rtmidilove PRIVATE LUA_RTMIDI_DLL LUA_RTMIDI_DLL_EXPORTS)
+target_link_libraries(lua-rtmidilove PRIVATE luajit rtmidi)
