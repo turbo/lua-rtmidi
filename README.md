@@ -14,9 +14,6 @@ cmake ..
 cmake --build . --target lua-rtmidilove
 ```
 
-Targets `lua-rtmidi51` and `lua-rtmidi52` are also available, which build the
-bindings for Lua 5.1 and 5.2 instead.
-
 # Copyright
 
 **lua-rtmidi** is licensed under the 2-clause BSD License.
